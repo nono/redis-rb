@@ -172,7 +172,7 @@ class Redis
     end
 
     def format_status_reply(line)
-      line.strip
+      line.strip.force_encoding('UTF-8')
     end
 
     def format_integer_reply(line)
@@ -184,7 +184,7 @@ class Redis
       return if bulklen == -1
       reply = @sock.read(bulklen)
       @sock.read(2) # Discard CRLF.
-      reply
+      reply.force_encoding('UTF-8')
     end
 
     def format_multi_bulk_reply(line)
